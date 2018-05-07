@@ -48,7 +48,6 @@
                 "label": "Database collation",
                 "description": "Database collation.",
                 "set": "utf8mb4_unicode_ci"
-
             },        
             {
                 "name": "DB_STACK",
