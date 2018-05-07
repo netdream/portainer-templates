@@ -1,0 +1,63 @@
+[
+    {
+        "type": "stack",
+        "title": "ND VHosting",
+        "name": "ndvhost",
+        "description": "Simple hosting",
+        "note": "Basic level",
+        "categories": ["web"],
+        "platform": "linux",
+        "logo": "https://portainer.io/images/logos/openfaas.png",
+        "repository": {
+            "url": "https://github.com/netdream/portainer-templates",
+            "stackfile": "stacks/nd-vhosting/docker-compose.yml"
+        },
+        "env": [
+            {
+                "name": "MYSQL_DATABASE",
+                "label": "Database name",
+                "description": "Database created."
+            },
+            {
+                "name": "MYSQL_USER",
+                "label": "Database user",
+                "description": "MySQL db user."
+            },
+            {
+                "name": "MYSQL_PASSWORD",
+                "label": "Database password",
+                "description": "Password used by the MySQL db user."
+            },
+            {
+                "name": "MYSQL_ROOT_PASSWORD",
+                "label": "Database root password",
+                "description": "Password used by the MySQL root user."
+            },
+            {
+                "name": "MYSQL_CHARACTER_SET_SERVER",
+                "label": "Database charset",
+                "description": "Database charset."
+            },
+            {
+                "name": "MYSQL_COLLATION_SERVER",
+                "label": "Database collation",
+                "description": "Database collation."
+            },        
+            {
+                "name": "DB_STACK",
+                "label": "Database stack version",
+                "description": "Database stack version"
+            },
+            {
+                "name": "DB_STACK",
+                "label": "Database stack version",
+                "description": "Database stack version"
+            },
+            {
+                "name": "DB_STACK",
+                "label": "Database stack version",
+                "description": "Database stack version"
+            }
+        ]
+    }
+]

@@ -1,0 +1,123 @@
+version: '3.4'
+services:
+  mariadb:
+    image: wodby/mariadb:${DB_STACK}
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "1"
+          memory: 256M
+      placement:
+        constraints:
+          - node.labels.nd.service != restricted
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_CHARACTER_SET_SERVER: ${MYSQL_CHARACTER_SET_SERVER}
+      MYSQL_COLLATION_SERVER: ${MYSQL_COLLATION_SERVER}
+    stdin_open: true
+    volumes:
+    - /data/vhosting/homes/${VH_USER}/persistent/mariadb:/var/lib/mysql
+    tty: true
+  apache:
+    image: wodby/php-apache:${WEB_STACK}
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 256M
+      placement:
+        constraints:
+          - node.labels.nd.service != restricted
+      update_config:
+        parallelism: 2
+        delay: 10s
+        order: start-first
+    environment:
+      NGINX_BACKEND_HOST: php
+      NGINX_SERVER_ROOT: /var/www/html/web
+    stdin_open: true
+    volumes:
+    - /data/vhosting/homes/${VH_USER}/persistent/web:/var/www/html
+    tty: true
+    ports:
+      - 80 # Web
+    depends_on:
+    - php
+  pma:
+    image: phpmyadmin/phpmyadmin
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 256M
+      placement:
+        constraints:
+          - node.labels.nd.service != restricted
+    environment:
+      PHP_MAX_INPUT_VARS: 1G
+      PHP_UPLOAD_MAX_FILESIZE: 1G
+      PMA_HOST: mariadb
+    stdin_open: true
+    tty: true
+    ports:
+      - 80 # Dashboard
+    depends_on:
+    - mariadb
+  php:
+    image: wodby/php:${PHP_STACK}
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 512M
+      placement:
+        constraints:
+          - node.labels.nd.service != restricted
+      update_config:
+        parallelism: 2
+        delay: 10s
+        order: "start-first"
+    environment:
+      PHP_DOCROOT: web
+      PHP_SENDMAIL_PATH: /usr/sbin/sendmail -t -i -S smtp:25
+      PHP_FPM_PM: ondemand
+      PHP_FPM_LOG_LEVEL: warning
+      PHP_FPM_PM_MAX_CHILDREN: 16
+    stdin_open: true
+    volumes:
+    - /data/vhosting/homes/${VH_USER}/persistent/web:/var/www/html
+    tty: true
+    depends_on:
+    - mariadb
+  smtp:
+    image: mailhog/mailhog
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 256M
+      placement:
+        constraints:
+          - node.labels.nd.service != restricted
+    stdin_open: true
+    tty: true
+    ports:
+      - 8025 # Dashboard
