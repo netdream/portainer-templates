@@ -16,47 +16,57 @@
             {
                 "name": "MYSQL_DATABASE",
                 "label": "Database name",
-                "description": "Database created."
+                "description": "Database created.",
+                "set": "db1"
             },
             {
                 "name": "MYSQL_USER",
                 "label": "Database user",
-                "description": "MySQL db user."
+                "description": "MySQL db user.",
+                "set": "dbuser1"
             },
             {
                 "name": "MYSQL_PASSWORD",
                 "label": "Database password",
-                "description": "Password used by the MySQL db user."
+                "description": "Password used by the MySQL db user.",
+                "set": "ChangeThis!"
             },
             {
                 "name": "MYSQL_ROOT_PASSWORD",
                 "label": "Database root password",
-                "description": "Password used by the MySQL root user."
+                "description": "Password used by the MySQL root user.",
+                "set": "AbsolutelyChangeThis!"
             },
             {
                 "name": "MYSQL_CHARACTER_SET_SERVER",
                 "label": "Database charset",
-                "description": "Database charset."
+                "description": "Database charset.",
+                "set": "utf8mb4"
             },
             {
                 "name": "MYSQL_COLLATION_SERVER",
                 "label": "Database collation",
-                "description": "Database collation."
+                "description": "Database collation.",
+                "set": "utf8mb4_unicode_ci"
+
             },        
             {
                 "name": "DB_STACK",
                 "label": "Database stack version",
-                "description": "Database stack version"
+                "description": "Database stack version",
+                "set": "10.1-3.1.3"
             },
             {
-                "name": "DB_STACK",
-                "label": "Database stack version",
-                "description": "Database stack version"
+                "name": "PHP_STACK",
+                "label": "PHP stack version",
+                "description": "PHP stack version",
+                "set": "7.2-4.4.2"
             },
             {
-                "name": "DB_STACK",
-                "label": "Database stack version",
-                "description": "Database stack version"
+                "name": "WEB_STACK",
+                "label": "Web stack version",
+                "description": "Web stack version",
+                "set": "2.4-3.0.5"
             }
         ]
     }
